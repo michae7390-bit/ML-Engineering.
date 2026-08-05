@@ -1,0 +1,9 @@
+# Vision dependencies
+
+ultralytics>=8.0.20
+opencv-python>=4.5.5
+pyserial>=3.5
+torch>=1.12
+
+# Notes
+# - On NVIDIA Jetson use the Jetson-optimized torch build. Installing torch can be platform-specific.

@@ -1,5 +1,5 @@
 // Mini Humanoid - basic gait + IMU stabilization + vision-based object approach/grasp
-// Requires: Adafruit_PWMServoDriver (for PCA9685), MPU6050 library, companion vision module (OpenMV) connected over UART
+// Requires: Adafruit_PWMServoDriver (for PCA9685), MPU6050 library, companion vision module (OpenMV or PC) connected over UART
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <MPU6050.h>
@@ -154,6 +154,12 @@ bool approachAndGraspIfBall() {
   if (obj.label != "ball") return false; // only handle ball for now
   if (obj.conf < 0.4) return false;
 
+  // if object appears sharp, do not grasp
+  if (obj.sharp) {
+    Serial.println("Detected sharp object - skipping grasp");
+    return false;
+  }
+
   Serial.print("Detected "); Serial.print(obj.label); Serial.print(" at cx="); Serial.println(obj.cx);
 
   // Simple strategy: point neck towards object's horizontal position.
@@ -219,7 +225,7 @@ void loop() {
         Vision::update();
         // if an object appears mid-walk, break out to handle it
         DetectedObject obj = Vision::get();
-        if (obj.valid && obj.label == "ball" && obj.conf > 0.5) {
+        if (obj.valid && obj.label == "ball" && obj.conf > 0.5 && !obj.sharp) {
           Serial.println("Object detected during gait, interrupting walk");
           k = gaitLen; // break outer loop
           break;

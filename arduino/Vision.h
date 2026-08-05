@@ -1,4 +1,4 @@
-# Vision interface for Arduino to parse simple detection messages from an OpenMV / companion camera
+# Vision parser header (updated with 'sharp')
 
 #ifndef VISION_H
 #define VISION_H
@@ -12,6 +12,7 @@ struct DetectedObject {
   int w;
   int h;
   float conf;
+  bool sharp; // new: whether object appears sharp / hazardous
   bool valid;
 };
 

@@ -1,7 +1,7 @@
 #include "Vision.h"
 
 static HardwareSerial *visionSerial = nullptr;
-static DetectedObject latest = {"",0,0,0,0,0.0,false};
+static DetectedObject latest = {"",0,0,0,0,0.0,false,false};
 static String lineBuf = "";
 
 void Vision::begin(HardwareSerial &ser) {
@@ -9,7 +9,7 @@ void Vision::begin(HardwareSerial &ser) {
 }
 
 // Simple parser for lines in the form:
-// label:ball,cx:120,cy:80,w:40,h:40,conf:0.85\n
+// label:ball,cx:120,cy:80,w:40,h:40,conf:0.85,sharp:0\n
 void Vision::update() {
   if (!visionSerial) return;
   while (visionSerial->available()) {
@@ -20,6 +20,7 @@ void Vision::update() {
         // parse
         DetectedObject obj;
         obj.valid = false;
+        obj.sharp = false;
         int start = 0;
         while (start < lineBuf.length()) {
           int comma = lineBuf.indexOf(',', start);
@@ -36,6 +37,7 @@ void Vision::update() {
             else if (key == "w") obj.w = val.toInt();
             else if (key == "h") obj.h = val.toInt();
             else if (key == "conf") obj.conf = val.toFloat();
+            else if (key == "sharp") obj.sharp = (val.toInt() != 0);
           }
           start = comma + 1;
         }

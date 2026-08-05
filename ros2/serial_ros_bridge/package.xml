@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>serial_ros_bridge</name>
+  <version>0.1.0</version>
+  <description>ROS2 Python bridge that reads vision detection lines from a serial device and publishes them on a ROS2 topic, and forwards simple commands from ROS2 to the microcontroller.</description>
+  <maintainer email="you@example.com">michae7390</maintainer>
+  <license>MIT</license>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>pyserial</exec_depend>
+</package>

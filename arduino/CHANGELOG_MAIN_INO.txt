@@ -1,0 +1,7 @@
+Updated main.ino to integrate vision and a simple grasp behavior.
+
+Changes made:
+- Added GRIPPER channel and expanded arrays to 12 channels.
+- Included Vision and Gripper modules and basic logic: the robot walks as before; if a detected object labeled "ball" appears with confidence > 0.4, the robot stops gait, orients neck, and attempts to close the gripper.
+
+This is a simple example and will need tuning for your hardware platform and wiring (which UART to use, correct servo channel mapping, gripper pulse values and mechanical calibration).

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Engineering - Advanced Machine Learning Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating background elements */
+        .background-blob {
+            position: absolute;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: #fff;
+            top: -50px;
+            left: -50px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #fff;
+            bottom: -100px;
+            right: -100px;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+
+        .blob-3 {
+            width: 250px;
+            height: 250px;
+            background: #fff;
+            top: 50%;
+            right: 10%;
+            animation: float 22s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -20px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-20px, 20px) rotate(180deg);
+            }
+            75% {
+                transform: translate(20px, 20px) rotate(270deg);
+            }
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+            padding: 60px 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Morphing text animation */
+        .morphing-text {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: morphText 4s ease infinite, gradientShift 6s ease infinite;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes morphText {
+            0% {
+                transform: scaleX(1) scaleY(1);
+            }
+            50% {
+                transform: scaleX(1.05) scaleY(0.95);
+            }
+            100% {
+                transform: scaleX(1) scaleY(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 30px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: fadeInDelay 1.5s ease-out;
+        }
+
+        @keyframes fadeInDelay {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            animation: fadeInDelay 2s ease-out;
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .icon-container:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .icon-svg {
+            width: 40px;
+            height: 40px;
+            stroke: rgba(255, 255, 255, 0.8);
+            fill: none;
+            stroke-width: 2;
+            animation: rotateIcon 4s linear infinite;
+        }
+
+        .icon-container:nth-child(1) .icon-svg {
+            animation: rotateIcon 4s linear infinite;
+        }
+
+        .icon-container:nth-child(2) .icon-svg {
+            animation: rotateIcon 4s linear infinite reverse;
+        }
+
+        .icon-container:nth-child(3) .icon-svg {
+            animation: rotateIcon 5s linear infinite;
+        }
+
+        @keyframes rotateIcon {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cta-button {
+            margin-top: 40px;
+            display: inline-flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeInDelay 2.5s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-5px);
+        }
+
+        /* Morphing shapes that represent different objects */
+        .shape-container {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            z-index: 5;
+        }
+
+        .morphing-shape {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            animation: morphShape 8s ease-in-out infinite;
+            backdrop-filter: blur(5px);
+        }
+
+        .morphing-shape:nth-child(1) {
+            animation: morphShape 8s ease-in-out infinite;
+        }
+
+        .morphing-shape:nth-child(2) {
+            animation: morphShape 8s ease-in-out infinite reverse;
+        }
+
+        .morphing-shape:nth-child(3) {
+            animation: morphShape 8s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes morphShape {
+            0% {
+                border-radius: 50% 50% 50% 50%;
+            }
+            25% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 40% 60% 30% 70%;
+            }
+            75% {
+                border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%;
+            }
+            100% {
+                border-radius: 50% 50% 50% 50%;
+            }
+        }
+
+        .shape-label {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 40px 30px;
+                border-radius: 30px;
+            }
+
+            .morphing-text {
+                font-size: 3.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .animated-icons {
+                gap: 20px;
+            }
+
+            .icon-container {
+                width: 60px;
+                height: 60px;
+            }
+
+            .shape-container {
+                display: none;
+            }
+
+            .cta-button {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Glow effect on text */
+        .glow-text {
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.8),
+                         0 0 60px rgba(240, 147, 251, 0.4),
+                         0 0 90px rgba(79, 172, 254, 0.2);
+        }
+
+        .floating-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Background blobs -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+    <div class="background-blob blob-3"></div>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="content">
+            <div class="glass-card">
+                <!-- Morphing text -->
+                <div class="morphing-text glow-text" id="morphingText">
+                    ML ENGINEERING
+                </div>
+
+                <!-- Subtitle -->
+                <div class="subtitle">
+                    Advanced Machine Learning Solutions
+                </div>
+
+                <!-- Animated tech icons -->
+                <div class="animated-icons">
+                    <div class="icon-container">
+                        <svg class="icon-svg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="icon-container">
+                        <svg class="icon-svg" viewBox="0 0 24 24">
+                            <polyline points="12 3 20 7 20 17 12 21 4 17 4 7 12 3"></polyline>
+                            <line x1="12" y1="12" x2="20" y2="7"></line>
+                            <line x1="12" y1="12" x2="12" y2="21"></line>
+                            <line x1="12" y1="12" x2="4" y2="7"></line>
+                        </svg>
+                    </div>
+                    <div class="icon-container">
+                        <svg class="icon-svg" viewBox="0 0 24 24">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Call to action buttons -->
+                <div class="cta-button">
+                    <button class="btn btn-primary">Explore Projects</button>
+                    <button class="btn btn-secondary">Documentation</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Morphing shapes at bottom -->
+        <div class="shape-container">
+            <div class="morphing-shape">
+                <span class="shape-label">🤖</span>
+            </div>
+            <div class="morphing-shape">
+                <span class="shape-label">⚙️</span>
+            </div>
+            <div class="morphing-shape">
+                <span class="shape-label">🧠</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const xPos = Math.random() * window.innerWidth;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+
+                particle.style.left = xPos + 'px';
+                particle.style.top = window.innerHeight + 'px';
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = delay + 's';
+
+                particlesContainer.appendChild(particle);
+
+                // Recreate particle after animation completes
+                setTimeout(() => {
+                    particle.remove();
+                    createParticles();
+                }, (duration + delay) * 1000);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Morphing text animation with different ML-related words
+        const morphingTexts = [
+            'ML ENGINEERING',
+            'MACHINE LEARNING',
+            'DEEP LEARNING',
+            'NEURAL NETWORKS',
+            'DATA SCIENCE',
+            'AI SOLUTIONS'
+        ];
+
+        let textIndex = 0;
+        const morphingTextElement = document.getElementById('morphingText');
+
+        function morphText() {
+            textIndex = (textIndex + 1) % morphingTexts.length;
+            morphingTextElement.style.animation = 'none';
+
+            setTimeout(() => {
+                morphingTextElement.textContent = morphingTexts[textIndex];
+                morphingTextElement.style.animation = 'morphText 4s ease infinite, gradientShift 6s ease infinite';
+            }, 10);
+        }
+
+        setInterval(morphText, 4000);
+
+        // Button click handlers
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Welcome to ML Engineering Portfolio!');
+            });
+        });
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>
